@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Chapter twenty two</title>
+    <!-- 从这章我们就进入了Vue 的第二部分学习了 -->
+    <!-- 组件化这一设计模式，对前端来说是很大的改变，也是众多前端所期待的功能 -->
+    <!-- 可以减少大量代码量的产生而增加开发效率 -->
+    <!-- 我记得，也不知道准不准，组件化一开始是由vue开始的，然后三大框架互相抄，我认为这是一个好的事情 -->
+    <!-- 虽然临时选择了Vue，但是如果长远开发大型项目的话，我还是 会选择 react -->
+
+    <!-- 和往常一样，先搞个官网的例子出来 -->
+</head>
+<body>
+
+        <div id="app">
+            <!-- 这个和组件，就像之前的过滤器格式差不多的，第一个属性名字一致就是一个自定义组件 -->
+            <button-counter></button-counter>
+
+            <hr>
+            <!-- 看，我又增加了两个一样的组件，也是可以使用。这就是组件的一个特性，组件的复用性 -->
+            <!-- 当组件服用时，它们自己各自有他们自己组件内的count属性，就像封装成对象一样，各自维护自己的变量 -->
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+
+
+
+            <say-something></say-something>
+
+        </div>
+
+    
+    <script>
+        //注意位置，要在Vue初始化 之前注册这个组件，这个组件是个全局注册组件
+        //组件注册后，就可以用在 Vue实例 和 组件树中的*所有 子组件使用
+        //组件的名字尽量不要使用驼峰命名法，因为引用的时候不能使用驼峰命名法
+        Vue.component('button-counter', {
+            //data和以往不同，组件里面的data必须是一个函数，正因为是函数的原因，所以才能各自维护自己的变量
+            data: function () {
+                return {
+                count: 0
+                }
+            },
+            template: '<button @click="count++">You clicked me {{ count }} times.</button>'
+        })
+
+        //到这里组件的基础就结束了，我们下一章继续讨论稍高级的组件知识
+
+
+        // 然后我要在这里扩展一下官网上面对于组件基础章节没有提及的地方
+        // 注册组件你也可以这样干
+
+        // 通过Vue.extend来创建一个全局的组件
+        var component = Vue.extend({
+            template: '<h1>我是通过 extend 创建的组件</h1>'
+        })
+
+        // 然后通过Vue.component(组件名字，组件对象)来注册一个组件，其实就是将上面的分开来做
+        // 如果你有 模版复用的需求 可以使用这种方式
+        Vue.component("say-something",component);
+
+       
+        var app = new Vue({
+            el: '#app',
+        })
+
+        
+    </script>
+
+</body>
+</html>

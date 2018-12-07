@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <title>Chapter sisteen</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/iview/dist/styles/iview.css">
+    <script src="https://unpkg.com/iview/dist/iview.min.js"></script>
+</head>
+<body>
+
+    <!-- 我们在这个基础上 增加 案件修饰符功能 -->
+    <!-- 实现的功能为，去除增加按钮，当输入完用户名字时，判断用户ID和用户名字是否为空
+    当然这个我们已经做过了，然后直接回车来添加用户 -->
+    <!-- 按键事件为 keyup -->
+
+        <div id="app">
+            <row type="flex" justify="start" class="code-row-bg">
+                <i-col span='6'>
+                    <!-- 我们在这里添加了ref属性，用于获取此DOM来 控制焦点行为 -->
+                    <i-input ref="userId" v-model="id" placeholder="请输入用户ID"/>
+                </i-col>
+                <i-col span='6'>
+                    <!-- keyup的演示在此 keyup是按键修饰符，enter 是指定哪个案件生效-->
+                    <!-- *注意，iview框架中，需要在后面添加 native ，要不然不生效，感谢百度 -->
+                    <!-- keyup还有 keyCode 方式，<input v-on:keyup.13="submit"> 
+                    我很是不喜欢，因为，一名程序员，不仅要做出 性能高的作品，在此同时，
+                    还要保证 代码的可阅读性， 毕竟时过一周，我自己的代码都看不懂，你怕不怕？ -->
+
+                    <!-- 全部的按键别名：
+                        .enter
+                        .tab
+                        .delete (捕获“删除”和“退格”键)
+                        .esc
+                        .space
+                        .up
+                        .down
+                        .left
+                        .right -->
+                    
+                    <!-- 还有一种很好的方式，如果大家一起开发，当用到上述没有的案件时，
+                    可以通过全局 config.keyCodes 对象自定义按键修饰符别名：
+                    Vue.config.keyCodes.f1 = 112 -->
+
+
+
+                    <!-- 2.5.0新增 一个功能 自动匹配按键修饰符 不过我不喜欢，也不演示，
+                        用到没有按键别名的，要么直接查keyCode，要么自定义Code -->
+
+
+                    
+                    
+                    <i-input @keyup.enter.native="addUser" v-model="name" placeholder="请输入用户名字" />
+                </i-col>
+                <i-col span='6'>
+                    <i-input placeholder="在此搜索用户" v-model="search"/>
+                </i-col>
+            </row>
+            <row>
+                <i-table border  :loading="loading" :columns="columns" :data="search===''?users:result">
+            </row>
+        </div>
+
+    
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data () {
+            return {
+                loading:false,
+                id:'',
+                name:'',
+                search:'',
+                result:[],
+                columns: [
+                    {
+                        title: 'Id',
+                        key: 'id'
+                    },
+                    {
+                        title: 'Name',
+                        key: 'name',
+                    },
+                    {
+                        title: 'Age',
+                        key: 'age'
+                    },
+                    {
+                        title: 'Address',
+                        key: 'address'
+                    },
+                    {
+                        title: 'Delete',
+                        key: 'delete',
+                        width: 150,
+                        align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'error',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.remove(params.index)
+                                        }
+                                    }
+                                }, 'Delete')
+                            ]);
+                        }
+                    }
+                ],
+                users: [
+                {
+                        id: 1,
+                        name: 'John Brown',
+                        age: 18,
+                        address: 'New York No. 1 Lake Park',
+                    },
+                    {
+                        id: 2,
+                        name: 'Jim Green',
+                        age: 24,
+                        address: 'London No. 1 Lake Park',
+                    },
+                    {
+                        id: 3,
+                        name: 'Joe Black',
+                        age: 30,
+                        address: 'Sydney No. 1 Lake Park',
+                    },
+                    {
+                        id: 4,
+                        name: 'Jon Snow',
+                        age: 26,
+                        address: 'Ottawa No. 2 Lake Park',
+                    }
+                ],
+                
+            }},
+            watch:{
+                search:function(){
+                    this.result = [];
+                    this.users.forEach(element => {
+                        if (element.name.toUpperCase()
+                        .indexOf(this.search.toUpperCase()) != -1) {
+                            this.result.push(element);
+                        }
+                    });
+                }
+            },
+            methods: {
+                addUser(){
+                    if(this.id === '' || this.name === ''){
+                        return;
+                    }
+                    this.users.push({id:this.id,name:this.name});
+                    this.id = this.name = "";
+
+                    // 将焦点转移到userId
+                    this.$refs.userId.focus();
+                },
+                remove (index) {
+                    this.users.splice(index, 1);
+                },
+            },
+        
+        })
+    </script>
+
+</body>
+</html>

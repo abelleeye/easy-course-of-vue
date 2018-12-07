@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <title>Chapter fourteen</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <!-- 过滤器的英文是 filter ，所以 和Java的filter 的思维是一样的，
+        用于渲染前的过滤操作，相对于过滤操作，我更喜欢说，想干什么干什么，
+        黑的变白的，白的变黑的，想怎么改怎么改 -->
+
+
+        {{message | IamAfilter}}
+
+        
+    </div>
+
+
+    
+    <script>
+        // 定义过滤器
+        //注意语法格式
+        //第一个为你定义的过滤器名字，
+        //第二个为方法 u can do whatever u want!
+        //最重要的一点，过滤器要放在上面
+        Vue.filter('IamAfilter', function(message){
+            //第一个字符可以用正则，详情百度一下
+            return message.replace('fucking','beautiful')
+        })
+
+        //过滤器还可以传参，除了第一个为绑定data，其余可以定义多个参数。上例子。
+        //第二个参数开始就可以往上面的过滤器后面括号里面填，如下
+        // {{message | IamAfilter(otherArgs)}}
+        // Vue.filter('IamAfilter', function(message,otherArgs...){
+        //     //第一个字符可以用正则，详情百度一下
+        //     return message.replace('fucking',otherArgs)
+        // })
+        //总之很灵活，很nice
+
+
+        var app = new Vue({
+            el: '#app',
+            data:{
+                message:'what a fucking day!'
+            }
+        })
+    </script>
+
+</body>
+</html>

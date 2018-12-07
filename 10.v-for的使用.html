@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <title>Chapter ten</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <!-- 循环最好的例子莫过于集合或数组，搞起，先定义一个数组 -->
+        <div v-for='element in list'>
+            {{element}}
+        </div>
+        <!-- 搞定，简单不简单，如果学过el 表达式的同学，差不多。尽可能你的想象去运用它 -->
+        <hr>
+        <!-- 加索引的，看, 是按照基本约定从0开始的哟！-->
+        <!-- 命名定义随意的，第一个是数据第二个是索引 -->
+        <!-- 再说一遍，就是和el表达式基本一样一样的 -->
+
+        <div v-for='(element,index) in list'>
+            {{index}}:{{element}}
+        </div>
+
+        <hr>
+        <!-- 表达式有什么？级联属性肯定有啊，看我再来个例子 -->
+        <!-- data中的班级ABC 必须加''，不知道为什么，可以编译通过，但不渲染属性值 -->
+        <!-- 尽量命名规范以避免不必要的麻烦 -->
+        <div v-for="(element,index) in arraylist">
+            {{index}}:{{element.name}},{{element.class}}
+        </div>
+
+        <hr>
+
+        <!-- 现在咱们要举例子只遍历对象，这个v-for有个地方挺坑的，就是value第一个，key第二个，索引最后。
+        但是，如果在作者方面考虑来说，这个很合理。看，一般情况下，如果你只要对象的value，只需输入一个，
+        既要value又要key，那就输入两个，还要索引，那就三个都输入。但是如果你要key，不要value怎么办？
+        那还用问，那就输入前两个，只输出key就好了。 南通在下雨！！！！！ -->
+
+        <div v-for="(value,key,index) in chef">
+            {{index}}:{{key}},{{value}}
+        </div>
+
+
+        <!-- v-for还可以迭代数字，从1开始哦，不是0哦，看例子。 -->
+
+        <hr>
+
+        <div v-for="num in 5">
+            {{num}}
+        </div>
+
+
+        <hr>
+
+        <!-- 在稍微复杂的开发中，for循环可能会遇到，指向v-for某个element的时候，没有指定固定的对象或key，
+        会导致for指针指向的是index索引，在list变动的时候，选择的element会根据索引位置来变动，就是，
+        你选择的是对象，但是真实指向的是索引，但你的对象脱离了这个索引，会导致，原本，
+        你指定指向那个索引的对象不是一开始你想指向的真实的对象，
+        这不是你所期待的，所以我们一般需要在标签内加入 指定的额外的 对象值，或key。
+        因为对象和key一般是不改变的，
+        而且，对象和key所对应的对象，也是你一开始所想指向的真实数据。 
+        这样，即使list变动，指针也跟着变动，一直指的都会是你所期待的那个对象 -->
+        
+        <!-- 我这里只举一个简单的格式的例子 -->
+        <!-- 因为懒的原因，所以就不演示了，大家记住格式和去理解可以了，
+        这里我用语言简单讲下，比如复杂的CRUD就可能会发生这样的情况 -->
+
+        <!-- 推荐大家每一个都写，根据业务可能不断的增大，比如几十个if eles事件，
+        可能会发生隐性问题，斩草要除根，下手要稳准狠。 -->
+
+        <div v-for="lol in arraylist" :key='lol.name'>
+
+
+            
+        </div>
+
+
+    </div>
+
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data:{
+                list:[1,2,3,4,5,6,7,8,9,10],
+                // 下面这个是对象啊，注意格式
+                arraylist:[
+                    {name:'张大爷',class:'A'},
+                    {name:'李也',class:'B'},
+                    {name:'李大妈',class:'C'}
+                ],
+                chef:{
+                    name:'SpongeBob',
+                    say:'I have a apple, I have a knife.',
+                    friend:'Patrick Star'
+                }
+            }
+        })
+    </script>
+    
+    </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Chapter twenty nine</title>
+    <!-- 这章我们讨论组件中方法的传递 -->
+</head>
+<body>
+
+    <div id="app">
+        <!-- 方法的传递，我们这次需要用@符号来绑定，也就是v-on -->
+        <!-- 我们先定义一个 @eat="show" -->
+        <happy @eat="show"></happy>
+
+    </div>
+
+    <template id='drink'>
+        <!-- 在模版中定义一个按钮来触发事件 -->
+        <button @click='aaa'>点击打印 输出内容请在console查看</button>
+    </template>
+
+
+
+    
+    <script>
+        Vue.component('happy', {
+            template: '#drink',
+            methods:{
+                aaa(){
+                    // 在这里我们就可以通过 emit 来调用 父组件传过来的 方法，当然我们用 eat来重新命名了
+                    this.$emit("eat")
+                    // 这样我们就可以通过自组件来调用父组件的方法了，但是我感觉好蠢啊，代码量好大，还不好管理
+                    // 但是这样解藕好好
+
+                    // emit 有个扩展，就是如果有参数传过来，不是 this.$emit("eat(参数。。。)")
+                    // 而是 this.$emit("eat",参数1，参数2。。。。) 这样的
+                }
+            }
+        }),
+
+
+
+        new Vue({
+            el:'#app',
+            data:{
+            },
+            methods:{
+                // 在这里定义这个show方法
+                show(){
+                    console.log('我出来啦！！！')
+                }
+            }
+        })
+
+     
+        
+    </script>
+
+</body>
+</html>

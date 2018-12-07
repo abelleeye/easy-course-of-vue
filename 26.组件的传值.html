@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Chapter twenty six</title>
+    
+</head>
+<body>
+
+    <div id="app">
+        <!-- 使用组件，并在下方定义名为 title 的 props 属性中加入了 你好！ 的值 -->
+        <hello title="你好！"></hello>
+    </div>
+
+    <template id='drink'>
+        <!-- 在模版内部调用了title的值，可以方便演示 -->
+        <h1>{{title}}</h1>
+    </template>
+
+
+    
+    <script>
+       //第一个组件
+        Vue.component('hello', {
+            // 定义的元素属性值，可随意定义，是个数组
+            props:['title'],
+            // 定义模版
+            template: '#drink'
+        }),
+
+
+        new Vue({
+            el:'#app',
+            data:{
+               
+            },
+        })
+
+     
+        
+    </script>
+
+</body>
+</html>

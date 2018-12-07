@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 这章就是全新的概念了，路由，废话不多说我们先导包 -->
+    <!-- 其实到这里我们应该使用模块化写程序了，但是。。。 很麻烦啊，很重 -->
+    <!-- 后续我也可能只会简单的提及几张关于Vue的模块化编程，
+        因为webpack我已经会用了 -->
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <title>Chapter thirty one</title>
+</head>
+<body>
+
+    <!-- 再导入Vue包后导入路由的包 这就神奇了， 因为之前提到过，导入Vue包后，就有了Vue的 构造函数，
+    在Vue包后导入路由， 就有了 router 构造函数， 有了构造函数怎么办， 当然是 new 它了-->
+    <!-- 无聊的生活中，我们要学会给自己 new 一个对象 -->
+    <div id="app">
+
+        <!-- 在这里放个跳转的链接 -->
+        <!-- router-link 是router的组件，会渲染成为一个a标签 -->
+        <router-link to="/hello">Go to Hello</router-link>
+
+        <!-- 这样也是可以的，加了#就是内部路由匹配， -->
+        <a href="#/hello">Go Go Go!</a>
+
+        <!-- 我们还可以在router-link里面添加一个tag属性，这样就不是a标签了，就是个div，点击后仍然可以跳转 -->
+        <router-link to="/hello" tag="div">Go to Hello</router-link>
+
+
+        <!-- 路由出口 -->
+        <!-- 路由匹配到的组件将渲染在这里 -->
+        <router-view></router-view>
+    </div>
+
+    
+    <script>
+
+        // 我们在这里定义一个组件
+       const hello= { template: '<h1>Hello!</h1>' }
+        // 这里new router实例
+        // 然后可以给它传 配置对象，和Vue实例差不多
+       const router = new VueRouter({
+           // route  见面知意，这个 单词的意思 就是，way，路径 ，也就是路由匹配规则, 我们不用这个，用数组的
+
+           routes:[ //route 是一个 匹配规则，而这是个组数 有若干个匹配规则
+                // 每个路由匹配规则有两个参数，一个是地址，另一个是组件
+                // 我们将下面定义的hello组件传进来
+                // 这个组件的值，必须是个对象，duang 你就把它放在这里
+                {path:'/hello', component: hello}
+           ]
+       })
+
+
+        new Vue({
+            router,
+            el:'#app',
+            data:{
+            },
+            methods:{
+            }
+        })
+
+
+        // 这章我用了 const 来定义组件，所以我在这里 讲下百度到的
+        // const var let 的区别
+
+        // 1. const 定义的变量不可以修改，而且必须初始化，不初始化，会报异常
+        // 2. var 定义的变量可以修改，如果不初始化会输出undefined，不会报错。
+        // 3. let 是块级作用域，函数内部使用let定义后，对函数外部无影响。
+
+     
+        
+    </script>
+
+</body>
+</html>

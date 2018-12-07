@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Chapter twenty three</title>
+    
+</head>
+<body>
+
+    <div id="app">
+        <button-counter></button-counter>
+    </div>
+
+    <!-- 我们在这里定义下面组件 以 ID 调用的方式 的模版 -->
+    <!-- 给模版一个名字为 look 的ID -->
+    <template id="look">
+        <button @click="count++">You clicked me {{ count }} times.</button>
+    </template>
+
+    
+    <script>
+       
+        Vue.component('button-counter', {
+            data: function () {
+                return {
+                count: 0
+                }
+            },
+            //这次我们要改写这个模版，因为这个模版是字符串拼接的，很不好用
+            //所以我们以 ID调用的方式来在上面 定义这个组件，看例子
+            // template: '<button @click="count++">You clicked me {{ count }} times.</button>'
+            template: '#look'
+        })
+
+        var app = new Vue({
+            el: '#app',
+        })
+
+        
+    </script>
+
+</body>
+</html>

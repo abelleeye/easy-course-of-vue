@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Chapter twenty five</title>
+    
+</head>
+<body>
+
+    <div id="app">
+        <!-- 这里定义了两个按钮用于切换组件 -->
+        <button type="button" @click="toQuestion">question</button>
+        <button type="button" @click="toAnswer">answer</button>
+
+        <!-- 我们使用Vue提供的component组件来实现组件的切换 这个是Vue的啊，不是原生的-->
+        <!-- 这里要注意的地方是，组件名称的格式 要用 '' 包括起来-->
+        <!-- <component :is="'question'"></component> -->
+
+        <!-- 我们这里采用是一个data变量 -->
+        <component :is="temp"></component>
+
+
+        <hr>
+        <hr>
+        <hr>
+        <!-- 上面用到的方式用的东西多，具体，但是麻烦，我这里提供一个简化版 -->
+
+        <button type="button" @click="easy='question'">question</button>
+        <button type="button" @click="easy='answer'">answer</button>
+        
+        <component :is="easy"></component>
+    </div>
+
+
+    
+    <script>
+       //第一个组件
+        Vue.component('question', {
+            data: function () {
+                return {
+                }
+            },
+            template: '<h1>你是谁？</h1>'
+        }),
+
+        //第二个组件
+        Vue.component('answer', {
+            data: function () {
+                return {
+                }
+            },
+            template: '<h1>我是一名没有感情的杀手</h1>'
+        })
+
+        new Vue({
+            el:'#app',
+            data:{
+                // 定义了一个字符串变量，用于切换组件
+                temp:'question',
+                //简化版的，就是没写methods
+                easy:'question'
+            },
+            // 定义两个方法用于切换data 中 temp标记 的值
+            methods:{
+                toQuestion(){
+                    this.temp = 'question'
+                },
+
+                toAnswer(){
+                    this.temp = 'answer'
+                }
+            }
+        })
+
+     
+        
+    </script>
+
+</body>
+</html>

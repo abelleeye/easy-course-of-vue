@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <title>Chapter twenty one</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 我们这章学习如何使用 axios 来发送http请求 -->
+    <!-- 废话不多说，先导包 -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="给我一杯忘情水，快点我！" @click="getApi" width="100%">
+        <br>
+        <textarea  rows="100" cols="50">{{info}}</textarea>
+    </div>
+
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data:{
+                info:''
+            },
+            methods:{
+                getApi(){
+                    //这个就是axios 的格式，
+                    // .get 就是 .post 你发送的请求方式请求
+                    // .then 是请求成功后的 方法 
+                    // 我们是讲成功返还的 数据 以字符串的形式 放入到 文本框中
+                    // 可以看到 我们成功 将我的博客主页的 网页内容 返回了回来
+                    // 爬虫也是同样的原理，就是 发送网络请求，然后截取你需要的东西
+                    // 因为网络的互通性 所以基本上通过一个网站，可以访问超级多的网站
+                    // 语言的魅力，计算机的魅力，好喜欢，哈哈！ 想干所有你能实现的东西
+                    axios
+                        .get("https://www.abellee.cn")
+                        .then(
+                            response => {
+                                this.info = response
+                            }
+                        )
+                        // 除了上面那两个方法，我们还可以catch异常，如果失败我们如何处理
+                        // 和java 越来越像了，是不是？ 但我还是感觉react 和java 超像，就是react要js基础好
+                        // finally 也是和java 一样， 我猜的， 无论是否 请求失败，都要 调用finally方法
+                            
+                        // 即 当请求成功时， 跳过 catch 直接执行finally，
+                        // 当请求失败时，终止 请求动作，直接跳转到 catch 语句块中，然后执行finally
+                        // 我猜的 ，有问题，给我写信
+                        .catch(error => {
+                            console.log(error)
+                            this.errored = true
+                        })
+                        .finally(() => this.loading = false)
+                }
+            }
+        })
+
+        // 如果和后端交互，返回的是json，我们就可以通过级联来获取了
+
+
+        // 下面给大家多放个多并发axios官方的例子
+
+        // 执行多个并发请求
+        function getUserAccount() {
+            return axios.get('/user/12345');
+        }
+
+        function getUserPermissions() {
+            return axios.get('/user/12345/permissions');
+        }
+
+        axios.all([getUserAccount(), getUserPermissions()])
+            .then(axios.spread(function (acct, perms) {
+                // 两个请求现在都执行完成
+        }));
+
+
+
+        
+    </script>
+    
+    </body>
+</html>

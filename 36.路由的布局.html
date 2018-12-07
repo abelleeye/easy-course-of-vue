@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <title>Chapter thirty six</title>
+    <!-- 因为是布局，所以我们需要几个组件，比如 头 尾 中间 或者 侧边栏 -->
+</head>
+<body>
+   
+    <div id="app">
+
+        <!-- 这里我们给 路由视图 添加 name属性来 绑定下方 组件 -->
+        <router-view name="header"></router-view>
+        <router-view name="center"></router-view>
+        <router-view name="tail"></router-view>
+    </div>
+
+   
+    
+    <script>
+
+        // 这里放组件们
+        const header = { template: '<h1>I\'m header</h1>'}
+
+        const center = { template: '<h1>I\'m center</h1>'}
+
+        const tail = { template: '<h1>I\'m tail</h1>'}
+
+       const router = new VueRouter({
+           routes:[ 
+                {path:'/', 
+                //注意啊，这里我加了s，因为我们要把好几个组件放到一个路由页面中
+                components:{
+                    'header':header,
+                    'center':center,
+                    'tail':tail
+                }
+            },
+               
+           ],
+       })
+
+
+        new Vue({
+            router,
+            el:'#app'
+        })
+
+
+     
+
+     
+        
+    </script>
+
+</body>
+</html>

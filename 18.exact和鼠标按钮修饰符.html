@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <title>Chapter eighteen</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/iview/dist/styles/iview.css">
+    <script src="https://unpkg.com/iview/dist/iview.min.js"></script>
+</head>
+<body>
+
+        <div id="app">
+            <row type="flex" justify="start" class="code-row-bg">
+                <i-col span='6'>
+                    <i-input v-model="id" placeholder="请输入用户ID"/>
+                </i-col>
+                <i-col span='6'>
+                    <i-input v-model="name" placeholder="请输入用户名字"/>
+                </i-col>
+                <i-col span='3'>
+                <!-- 这次我们通过这个按钮来 演示这两个修饰符的作用 -->
+                <!-- 这个是13章的按钮 -->
+                <!-- <i-button type="primary" @click="addUser">添加用户</i-button> -->
+
+                <!-- 我们在这里添加一个 要同时按住ctrl 和 点击鼠标才可以 添加的 按钮 -->
+                <!-- 经测试很傻，当ctrl 和鼠标左键同时点击按钮，谷歌浏览器默认 出鼠标右键那个菜单，我们换一个meta -->
+                
+                <!-- *** .exact 修饰符允许你控制由精确的系统修饰符组合触发的事件。 -->
+                <!-- 经测试，未发生官方文档提及的问题，以下是原话 -->
+                <!-- 即使 Alt 或 Shift 被一同按下时也会触发 -->
+                    <!-- <button @click.ctrl="onClick">A</button> -->
+                <!-- 所以我们直接跳过 exact 修饰符 -->
+
+
+
+
+                <!-- 鼠标修饰符 -->
+                <!-- 我在后面加了right， 意思是鼠标右键点击 按钮可以触发事件，可惜，我点击不了，
+                右键是浏览器菜单栏，但是鼠标左键点击时，是失效的，真刺激，所以我们可是说它是有效的 -->
+                <!-- <i-button type="primary" @click.right.natice="addUser">添加用户</i-button> -->
+
+                <!-- 这次我们换成鼠标中键 -->
+                <i-button type="primary" @click.middle.native="addUser">添加用户</i-button>
+                <!-- 很好用，鼠标修饰符就这么多，结束 -->
+
+                <!-- 鼠标按钮修饰符
+
+                    2.2.0 新增
+                    .left
+                    .right
+                    .middle
+                    这些修饰符会限制处理函数仅响应特定的鼠标按钮。 -->
+
+
+
+                </i-col>
+                <i-col span='6'>
+                    <i-input placeholder="在此搜索用户" v-model="search"/>
+                </i-col>
+            </row>
+            <row>
+                <i-table border  :loading="loading" :columns="columns" :data="search===''?users:result">
+            </row>
+        </div>
+
+    
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data () {
+            return {
+                loading:false,
+                id:'',
+                name:'',
+                search:'',
+                result:[],
+                columns: [
+                    {
+                        title: 'Id',
+                        key: 'id'
+                    },
+                    {
+                        title: 'Name',
+                        key: 'name',
+                    },
+                    {
+                        title: 'Age',
+                        key: 'age'
+                    },
+                    {
+                        title: 'Address',
+                        key: 'address'
+                    },
+                    {
+                        title: 'Delete',
+                        key: 'delete',
+                        width: 150,
+                        align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'error',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.remove(params.index)
+                                        }
+                                    }
+                                }, 'Delete')
+                            ]);
+                        }
+                    }
+                ],
+                users: [
+                {
+                        id: 1,
+                        name: 'John Brown',
+                        age: 18,
+                        address: 'New York No. 1 Lake Park',
+                    },
+                    {
+                        id: 2,
+                        name: 'Jim Green',
+                        age: 24,
+                        address: 'London No. 1 Lake Park',
+                    },
+                    {
+                        id: 3,
+                        name: 'Joe Black',
+                        age: 30,
+                        address: 'Sydney No. 1 Lake Park',
+                    },
+                    {
+                        id: 4,
+                        name: 'Jon Snow',
+                        age: 26,
+                        address: 'Ottawa No. 2 Lake Park',
+                    }
+                ],
+                
+            }},
+            watch:{
+                search:function(){
+                    this.result = [];
+                    this.users.forEach(element => {
+                        if (element.name.toUpperCase()
+                        .indexOf(this.search.toUpperCase()) != -1) {
+                            this.result.push(element);
+                        }
+                    });
+
+                    loading=false;
+
+                }
+            },
+            methods: {
+                addUser(){
+                    if(this.id === '' || this.name === ''){
+                        return;
+                    }
+                    this.users.push({id:this.id,name:this.name});
+                    this.id = this.name = "";
+                },
+                remove (index) {
+                    this.users.splice(index, 1);
+                },
+            },
+        
+        })
+    </script>
+
+</body>
+</html>

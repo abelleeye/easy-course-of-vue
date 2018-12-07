@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Chapter thirty eight</title>
+</head>
+<body>
+    
+   
+    <div id="app">
+        
+        <!-- 可以直接拿得到计算的值，下面说了，就是像取data一样拿它 -->
+        {{result}}
+    </div>
+
+    
+    <script>
+
+
+        new Vue({
+            el:'#app',
+            data:{
+                // 我们在这里定义几个属性来辅助了解“计算”
+                one:1,
+                two:2
+            },
+            computed:{
+                // 在这里定义的东西，就是计算，其实本质 就是方法
+                // 但是通常 当作 值 来调用
+
+                // 当你改变 data 中的 被computed 使用的数据时，就会触发重新计算
+                'result':function(){
+                    return this.one + this.two;
+                }
+            }
+        })
+
+
+     
+
+     
+        
+    </script>
+
+</body>
+</html>

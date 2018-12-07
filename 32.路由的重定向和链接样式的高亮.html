@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <title>Chapter thirty two</title>
+</head>
+<body>
+    <style>
+        .router-link-active{
+            color:red;
+        }
+    </style>
+    
+
+   
+    <div id="app">
+        <!-- 这个router-link 默认有一个 router-link-active的样式，我们可以通过更改它来实现自定义样式 -->
+        <!-- 修改完，当我们移动到哪个路由页面，那个页面的路由链接就是我们的自定义的样式 -->
+        <router-link to="/hello" >Go to Hello</router-link>
+       
+        <router-view></router-view>
+    </div>
+
+    
+    <script>
+
+       const hello= { template: '<h1>Hello!</h1>' }
+       const router = new VueRouter({
+
+           routes:[ 
+                {path:'/hello', component: hello},
+                //路由的重定向在这里设置，我们直接将home页转到hello
+                {path:'/', redirect:'/hello'}
+           ],
+
+
+            // 我们还可以在这里自定义样式名字，但我感觉很蠢，除非，你有现成的样式
+            linkActiveClass:'这个地方写你的自定义样式名字 css代码'
+
+       })
+
+
+        new Vue({
+            router,
+            el:'#app',
+            data:{
+            },
+            methods:{
+            }
+        })
+
+
+     
+
+     
+        
+    </script>
+
+</body>
+</html>

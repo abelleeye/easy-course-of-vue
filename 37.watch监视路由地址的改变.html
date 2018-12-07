@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <title>Chapter thirty seven</title>
+</head>
+<body>
+    
+   
+    <div id="app">
+        <router-link to="/park" >go to park</router-link>
+        <router-view></router-view>
+    </div>
+
+    <template id="park">
+        <div>
+            <h1>公园</h1>
+            <br>
+            <router-link to="/park/maletoilet" >go to maletoilet</router-link>
+            <br>
+            <router-link to="/park/femaletoilet" >go to femaletoilet</router-link>
+
+            <router-view></router-view>
+        </div>
+    </template>
+    
+    <script>
+        const park = { template: '#park'}
+
+        const maletoilet = { template: '<h1>男厕所</h1>' }
+
+        const femaletoilet = { template: '<h1>女厕所</h1>' }
+
+       const router = new VueRouter({
+
+           routes:[ 
+                {path:'/park', 
+                component: park,
+                children:[
+                    {path:'maletoilet',component: maletoilet},
+                    {path:'femaletoilet',component: femaletoilet}
+                ]
+            },
+               
+           ],
+       })
+
+
+        new Vue({
+            router,
+            el:'#app',
+            watch:{
+                // 我们通过监听 $route.path 来获取路径
+                // 第一个参数 就是你跳转到的新路径
+                // 第二个参数 就是你跳转之前的路径
+                // 当然名字你可以自定义
+                
+                // 自己打开网页 然后打开控制台 看一下
+                '$route.path':function(newVal, oldVal){
+                    console.log(oldVal+'======>'+newVal)
+                }
+
+
+                // 我做这个是因为，想说明，
+                // 一般 监听非DOM元素的改变时，使用watch是一个很好的选择
+            }
+        })
+
+
+     
+
+     
+        
+    </script>
+
+</body>
+</html>

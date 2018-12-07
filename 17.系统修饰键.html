@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <title>Chapter seventeen</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/iview/dist/styles/iview.css">
+    <script src="https://unpkg.com/iview/dist/iview.min.js"></script>
+</head>
+<body>
+
+        <!-- 系统修饰键，相当于按键修饰符的延伸，来我们继续上次的例子扩展一下 -->
+        <div id="app">
+            <row type="flex" justify="start" class="code-row-bg">
+                <i-col span='6'>
+                    <i-input ref="userId" v-model="id" placeholder="请输入用户ID"/>
+                </i-col>
+                <i-col span='6'>
+                    <!-- 我们在这里加个ctrl，为什么加这个键？
+                    因为我要减少大家系统的不同性，然后我还会介绍其它系统修饰键需要注意的地方。 -->
+                    <i-input @keyup.ctrl.enter.native="addUser" v-model="name" placeholder="请输入用户名字" />
+                    <!-- 看，这样我们只有在 同时按住ctrl 和 enter的时候才会添加用户 -->
+                    
+                    <!-- 系统按键修饰符列表
+                        .ctrl
+                        .alt
+                        .shift
+                        .meta -->
+
+                    <!-- 这个是官方的原话
+                    在 Mac 系统键盘上，meta 对应 command 键 (⌘)。在 Windows 系统键盘 meta 对应 Windows 徽标键 (⊞)。
+                    在 Sun 操作系统键盘上，meta 对应实心宝石键 (◆)。在其他特定键盘上，尤其在 MIT 和 Lisp 机器的键盘、
+                    以及其后继产品，比如 Knight 键盘、space-cadet 键盘，meta 被标记为“META”。在 Symbolics 键盘上，
+                    meta 被标记为“META”或者“Meta”。 -->
+
+
+
+                    <!-- <div @click.ctrl="hello">hello</div> -->
+                    <!-- 和点击事件搭配也是可以的，我很喜欢 -->
+                </i-col>
+                <i-col span='6'>
+                    <i-input placeholder="在此搜索用户" v-model="search"/>
+                </i-col>
+            </row>
+            <row>
+                <i-table border  :loading="loading" :columns="columns" :data="search===''?users:result">
+            </row>
+        </div>
+
+    
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data () {
+            return {
+                loading:false,
+                id:'',
+                name:'',
+                search:'',
+                result:[],
+                columns: [
+                    {
+                        title: 'Id',
+                        key: 'id'
+                    },
+                    {
+                        title: 'Name',
+                        key: 'name',
+                    },
+                    {
+                        title: 'Age',
+                        key: 'age'
+                    },
+                    {
+                        title: 'Address',
+                        key: 'address'
+                    },
+                    {
+                        title: 'Delete',
+                        key: 'delete',
+                        width: 150,
+                        align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'error',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.remove(params.index)
+                                        }
+                                    }
+                                }, 'Delete')
+                            ]);
+                        }
+                    }
+                ],
+                users: [
+                {
+                        id: 1,
+                        name: 'John Brown',
+                        age: 18,
+                        address: 'New York No. 1 Lake Park',
+                    },
+                    {
+                        id: 2,
+                        name: 'Jim Green',
+                        age: 24,
+                        address: 'London No. 1 Lake Park',
+                    },
+                    {
+                        id: 3,
+                        name: 'Joe Black',
+                        age: 30,
+                        address: 'Sydney No. 1 Lake Park',
+                    },
+                    {
+                        id: 4,
+                        name: 'Jon Snow',
+                        age: 26,
+                        address: 'Ottawa No. 2 Lake Park',
+                    }
+                ],
+                
+            }},
+            watch:{
+                search:function(){
+                    this.result = [];
+                    this.users.forEach(element => {
+                        if (element.name.toUpperCase()
+                        .indexOf(this.search.toUpperCase()) != -1) {
+                            this.result.push(element);
+                        }
+                    });
+                }
+            },
+            methods: {
+                addUser(){
+                    if(this.id === '' || this.name === ''){
+                        return;
+                    }
+                    this.users.push({id:this.id,name:this.name});
+                    this.id = this.name = "";
+
+                    // 将焦点转移到userId
+                    this.$refs.userId.focus();
+                },
+                remove (index) {
+                    this.users.splice(index, 1);
+                },
+            },
+        
+        })
+    </script>
+
+</body>
+</html>

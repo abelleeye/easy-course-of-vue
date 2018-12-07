@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Chapter thirty</title>
+    <!-- 这章我们学习 通过 ref 获取DOM元素 或者 组件， 其实之前的章节我已经 使用过了 -->
+</head>
+<body>
+
+    <div id="app">
+        <!-- 我们这里先放个简单的大大的 h1 元素 -->
+
+        <!-- 平常的时候，我们要拿到这个DOM元素，我们通常 给它个标记，比如 ID CLASS 或者其它的，
+        然后通过 元素选择器来 选中它，我们在这里加个ID -->
+        <h1 id="word">诸葛亮打司马懿屁股！</h1>
+        <!-- 然后加个按钮，触发事件 -->
+        <button @click="wood">打印</button>
+        
+        <hr><hr><hr>
+        <!-- ========================== -->
+        <!-- Vue不推荐直接操作DOM -->
+        <!-- 所以它给了一个属性 ref ，然后我们就可以在方法里通过 $refs.refName 拿到元素 -->
+        <!-- 我们在这个元素上面加一个ref属性 -->
+        <h1 ref="would">诸葛亮打司马懿屁股！</h1>
+
+        <hr><hr><hr>
+
+        <!-- 现在我们通过ref来选择组件 -->
+        <hello ref="world"></hello>
+
+    </div>
+
+    <template id='drink'>
+        <h1>我是组件</h1>
+    </template>
+
+
+
+
+    
+    <script>
+        Vue.component('hello', {
+            props:[],
+            template: '#drink',
+            // 我们给组件定义一个data
+            data(){
+                return{
+                    say:'where are u going?'
+                }
+            }
+        }),
+
+
+
+        new Vue({
+            el:'#app',
+            data:{
+            },
+            methods:{
+                // 然后我们在这里通过ID来选中他,这样就拿到这个DOM元素了
+                wood(){
+                    console.log('普通方式')
+                    console.log(document.querySelector('#word'))
+
+                    // 我就不知道用这个选择器为什么报错，写滑稽那章憋了我三小时，我都没弄好，就很迷
+                    // console.log(document.getElementById('#word').innerText)
+
+
+
+                    // =========================
+
+
+                    // 我们在这里通过 Vue 提供的 ref方式来选择DOM
+                    console.log('ref方式 DOM')
+                    console.log(this.$refs.would)
+
+                    // 我们在这里通过 Vue 提供的 ref方式来选择组件
+                    console.log('ref方式 组件')
+                    console.log(this.$refs.world)
+                    // 我们可以通过这个 来拿到组件的data
+                    console.log(this.$refs.world.say)
+                    // 如果你想拿到方法的话，格式是这样的，我们假设它有一个show方法,加个括号就是方法了
+                    // console.log(this.$refs.world.show())
+                }
+            }
+        })
+
+     
+        
+    </script>
+
+</body>
+</html>

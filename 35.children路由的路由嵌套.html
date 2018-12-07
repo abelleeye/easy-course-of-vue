@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <title>Chapter thirty five</title>
+</head>
+<body>
+    <!-- 这章我们用这样的例子，来说明这个 children 路由嵌套 -->
+
+    <!-- 你去一个公园，想上厕所， 如果你是男的，你要去男厕所， 女的，你要去女厕所 -->
+
+    <!-- okay，交代完毕，开始整 -->
+    
+
+   
+    <div id="app">
+        <!-- 去公园 -->
+        <router-link to="/park" >go to park</router-link>
+        <router-view></router-view>
+    </div>
+
+    <!-- 公园的模版 稍复杂，单拿出来 -->
+
+    <!-- 我今天又忘记了，模版内要有父 块的问题，大家也要注意 -->
+    <template id="park">
+        <!-- 加了个div -->
+        <div>
+            <h1>公园</h1>
+            <br>
+            <router-link to="/park/maletoilet" >go to maletoilet</router-link>
+            <br>
+            <router-link to="/park/femaletoilet" >go to femaletoilet</router-link>
+
+            <router-view></router-view>
+        </div>
+    </template>
+    
+    <script>
+        // 公园模版对象
+        const park = { template: '#park'}
+
+        // 男厕所模版对象
+        const maletoilet = { template: '<h1>男厕所</h1>' }
+        // 女厕所模版对象
+        const femaletoilet = { template: '<h1>女厕所</h1>' }
+
+       const router = new VueRouter({
+
+           routes:[ 
+                // 公园路由
+                {path:'/park', 
+                component: park,
+                //公园的子路由
+                children:[
+                    // 因为是子路由 所以没有跟路径 / 符号
+                    // 男厕所路由
+                    {path:'maletoilet',component: maletoilet},
+                    // 女厕所路由
+                    {path:'femaletoilet',component: femaletoilet}
+                ]
+            },
+               
+           ],
+       })
+
+
+        new Vue({
+            router,
+            el:'#app'
+        })
+
+
+     
+
+     
+        
+    </script>
+
+</body>
+</html>

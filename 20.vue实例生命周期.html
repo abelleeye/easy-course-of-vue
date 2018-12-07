@@ -1,0 +1,132 @@
+https://cn.vuejs.org/v2/guide/instance.html#实例生命周期钩子
+
+这个生命周期，很不好用代码演示，所以直接 放了官方文档关于生命周期的链接，大家看一下。
+抱歉！ 
+这节是 Vue的重中之重！ 要好好学啊！
+
+
+当我写完这个图的时候，我想到可能大家还是困惑于，如何书写生命周期函数，
+毕竟无论怎样，代码还是要落实到 电脑上才行。我把官方的例子放在这里
+created 就是下面的 created （第二个）生命周期函数，不懂，就看完回来看这个就好。
+格式就是这个格式，不会错！
+学完这个，我就准备再弄个 组件 还有 路由 顺便复习和加深一下 watch computed methods就结束了，
+更高级别的应该给专业的前端人员去使用，
+这些我已经足够做自己的项目了，祝大家越走越远！
+
+new Vue({
+    data: {
+            a: 1
+        },
+    created: function () {
+        // `this` 指向 vm 实例
+        console.log('a is: ' + this.a)
+    }
+})
+
+
+生命周期我在这个地方以箭头的方式简单演示一下
+
+
+new Vue({这里放这个对象的属性})
+        ||
+        ||
+Init Events&Liftcycle 初始化Vue对象的 默认事件和 生命周期函数
+        ||
+        ||
+            ==> *beforeCreate 这是一个生命周期函数，与data methods 同级
+                在实例创建完前 执行这个函数 执行这个函数之前，data methods 之类的是没有加载完成的
+                是不能拿到这些东西的。
+        ||
+        ||
+                            这个Injection单词就是java依赖注入里面的注入
+Init Injections&reactivity 初始化 注入和 反应 ， 意思是初始化这两个完，我们的Vue实例就已经完全初始化完毕了
+        ||
+        ||
+            ==> *created 这个生命周期函数在 Init Injections&reactivity后
+                        即 这个函数 已经可以拿到Vue实例 的东西了，data methods
+                        里面的东西都可以拿到了，可以在这个函数中做一些东西
+        ||
+        ||
+Has “el” option？ 看有没有el的属性     ====>如果没有||
+        ||                                      || when vm.$mount(el) is called
+        ||如果有                                 || 这个我不会
+        ||                                      ||
+Has “template” option  看有没有template属性 < ======
+        ||
+        || 
+     ===   ===================================
+    ||                                      ||
+    || 如果有                                || 如果没有
+    ||                                      ||
+complile template into render function      ||
+直接编译 template 到 渲染方法                  complile el's outerHTML as template
+    ||                                        编译 el的 outerHTMl 作为我们的模版
+    ||                                                  ||
+    ||                                                  ||
+    ||                                                  ||
+    ========================||============================
+                            ||
+                            ||
+                            ||
+                                ======> *beforeMount 加载之前  （这个单词给了我很大的困扰）
+                                                    在这个函数发生时，
+                                                    模版已经好了，
+                                                    但是模版还没有渲染到页面上
+                                                    可能有人会问，什么是模版？模版就是一堆字符串
+                            ||
+                            ||
+                            ||
+                Create vm.$el and replace "el" with it
+                将页面中的el 替换为 我们之前加载 的模版
+                            ||
+                            ||
+                            ||
+                                ========> *mounted  
+                                            到这里我们的Vue实例就彻底 创建完成了
+                            ||
+                            ||
+                            ||
+
+=======>  《官方那个大红球》 Mounted  这个就是彻底创建完的 Vue实例 接下来就是扩展 我来两行空格 强调一下
+||
+||                          ||
+||                          ||
+||                          ||      
+||          ==================================================
+||  when data changes 当数据发生改变时                  when vm.$destroy() is called 当vm回收方法通知后
+||          ||                                              ||
+||          ||                                              ||
+||          ||                                              ||
+^^              ======> beforeUpdate                        ||
+||                      在更新动作之前的生命周期函数             ||
+||          ||                                              ||
+||          ||                                              ||
+||  Virtual DOM re-render and patch                         ||
+||  虚拟DOM 将重新渲染 和 修复                                  ||
+||          ||                                              ||
+||          ||                                              ||
+||              =====> updated                              ||
+||                      更新之后的生命周期函数                  ||
+||          ||                                              ||
+====<====<====                                              ||
+                                                            ||
+                                                            ||
+                                                                ======> beforeDestory
+                                                                        回收之前的生命周期函数
+                                                            ||
+                                                            ||
+                                                            ||
+                                                        Tear down watchers, child components and 
+                                                        event listeners
+                                                        销毁 监视者 什么是监视者 我也不知道
+                                                        销毁 该Vue实例 的所有子组件
+                                                        销毁 事件的 监听器
+                                                            ||
+                                                            ||
+                                                            ||
+                                                        Destroyed 回收完毕 然后执行回收完毕之后的生命周期函数
+                                                                            ||
+                                                                            ||
+                                                                            ||
+                                                                最后一个生命周期函数没有用等号表示但不要误解，还是来一个吧
+                                                                            ========>  destroyed

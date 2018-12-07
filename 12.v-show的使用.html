@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <title>Chapter twelve</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        
+        <!-- v-show和v-if 在控制单个元素的时候 作用差不多，区别就是 当boolean值为false时，
+        if是移除，而show是在元素上面添加了display=none 的字段。 if show 各有优点，
+        我想 得多大的 多复杂 要求多高的环境 可以扣到这个的区别！ 使用时，慢慢思考，养成习惯，
+        不要死扣。随心而动，是一门境界，哈哈！ -->
+
+        <input type="button" value="awesome button" @click="mood=!mood">
+
+
+        <hr>
+
+
+            v-show
+        <h5 v-if="mood">我出来了！</h5>
+        <h5 v-else>我又回去了!</h5>
+
+        <h5 v-show="mood">My favo food is ...... actually IDK.</h5>
+        
+
+        <hr>
+
+
+            v-if
+        <h5 v-if="mood">我出来了！</h5>
+        <h5 v-else>我又回去了!</h5>
+
+        <h5 v-show="mood">My favo food is ...... actually IDK.</h5>
+
+
+        
+
+        
+    </div>
+
+
+    
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data:{
+                mood:true
+            }
+        })
+    </script>
+
+</body>
+</html>

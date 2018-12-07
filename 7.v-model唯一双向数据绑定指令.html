@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <title>Chapter seven</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <!-- v-model的作用为：双向绑定数据，看例子 -->
+    <div id="app">
+
+        <!-- 大家可以看出来，如果你在控制台修改下方data中的值，页面上h4标签里面的值不会跟着一起改变 -->
+        <h4>{{message}}</h4>
+
+        <!-- 但是如果用v-model绑定后，你尝试改变 text 里面的值，整个全局message字符串都跟着一起改变，试一下！ -->
+        <!-- 这个双向绑定是v-bind所不能的，不信的，可以去试下 -->
+        <!-- *但是在这里有个重点，我要提醒大家，请在服务器下测试，尽可能静态页面下测试，可能会有缓存问题，导致数据不动，
+            我就遇到了问题。服务器的意思就是，地址是ip地址的，也就是localhost之类的。-->
+        <!-- 懒就不弄，差不多。我就没弄 -->
+        <!-- *还有个特别大的注意的地方，这个v-model只能用于表单元素中 -->
+        <input v-model="message">
+        
+    </div>
+
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data:{
+                message:'吃葡萄就吐葡萄皮！'
+            },
+        })
+    </script>
+    
+    </body>
+</html>

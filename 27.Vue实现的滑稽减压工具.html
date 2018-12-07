@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>噔 噔 噔 噔 噔噔噔！</title>
+    
+</head>
+<body>
+    <!-- 我也学的累了，所以写个玩具玩玩 -->
+    <!-- 本来这个不应该属于这个系列的，但是又不知道放哪里的好，所以就27就是它了 -->
+
+    <div id="app" >
+        <!-- 我们的目的是： -->
+            <!-- 1.在浏览器上随机位置生成3-5个大小不一的滑稽 -->
+                <!-- 然后感觉好麻烦，先弄一个 -->
+
+            <!-- 2.遇到屏幕边缘，然后180度对角线反弹 -->
+        <smile :style="{left:left+'px',top:top+'px'}" id="abel"></smile>
+        
+    </div>
+
+    <template id='smile'>
+            <div class="smile">
+                    <!-- 这里应该封装的，但是我忘记了，写写就难重构了，所以就这样 -->
+                    <div class="lefteye1"></div>
+                    <div class="lefteye2"></div>
+                    <div class="lefteye3"></div>
+                    <div class="lefteye4"></div>
+                    <div class="lefteyewhite1"></div>
+                    <div class="lefteyewhite2"></div>
+                    <div class="lefteyewhite3"></div>
+                    <div class="lefteyeball"></div>
+        
+                    <div class="righteye1"></div>
+                    <div class="righteye2"></div>
+                    <div class="righteye3"></div>
+                    <div class="righteye4"></div>
+                    <div class="righteyewhite1"></div>
+                    <div class="righteyewhite2"></div>
+                    <div class="righteyewhite3-1"></div>
+                    <div class="righteyewhite3-2"></div>
+                    <div class="righteyewhite3-3"></div>
+                    <div class="righteyeball"></div>
+                    <!-- <div class="hair"></div> -->
+                    <div class="mouth"></div>
+                </div>
+    </template>
+
+
+    
+    <script>
+        Vue.component('smile', {
+            template: '#smile'
+        }),
+
+
+        new Vue({
+            el:'#app',
+            data:{
+                left:0,
+                top:0,
+                windosHeight:0,
+                windosWidth:0,
+                xaxis:true,
+                yaxis:true,
+            },
+            methods:{
+                move(){
+                    if(this.xaxis == true){
+                        this.left += 2
+                    }
+                    
+                    if(this.xaxis == false){
+                        this.left -= 2
+                    }
+                    if(this.left <= 0){
+                        this.xaxis = true;
+                    }
+                    // 215是因为组件长宽是200
+                    if(this.left >= this.windosWidth-215){
+                        this.xaxis = false;
+                    }
+                    if(this.yaxis == true){
+                        this.top += 2
+                    }
+                    if(this.yaxis == false){
+                        this.top -= 2
+                    }
+                    if(this.top <= 0){
+                        this.yaxis = true;
+                    }
+                    if(this.top >= this.windosHeight-215){
+                        this.yaxis = false;
+                    }
+
+                    // 这里写个toString方法，遇到问题的，可以打开看看
+
+                    // console.log(
+                    //     'left:'+this.left,
+                    //     'top:'+this.top,
+                    //     'windosHeight:'+this.windosHeight,
+                    //     'windosWidth:'+this.windosWidth,
+                    //     'xaxis:'+this.xaxis,
+                    //     'yaxis:'+this.yaxis,
+                    // )
+                      
+                }
+            },
+            mounted:function(){
+                    // 页面高度
+                    this.windosHeight = window.innerHeight;
+                    // 页面宽度
+                    this.windosWidth = window.innerWidth;
+                    this.top = document.querySelector('#abel').getBoundingClientRect().top;
+                    this.left = document.querySelector('#abel').getBoundingClientRect().left;
+                    setInterval(this.move,30);
+            },
+            
+        })
+     
+        
+    </script>
+
+    <!-- 滑稽的css代码 -->
+    <style>
+        .smile{
+            /* 宽度 */
+            width: 200px;
+            /* 长度 */
+            height: 200px;
+            /* 让它变成个圆形 */
+            border-radius: 50%;
+            /* 弄个颜色，让我们看到它， 这个颜色还可以*/
+            background-color: rgb(255, 220, 132);
+            /* 滑稽有阴影，那我们也来个阴影， 感觉像圣经的口气呢，哈哈！神说要有光，就有了光！ */
+                        /* 外阴影 */
+            box-shadow: 3px 8px 20px 2px rgba(0, 0, 0, 0.3), 
+                        /* 内阴影 */
+                        0px 0px 20px 10px rgba(238, 170, 85, 0.8)inset;
+            /* 定个位，要不然不好调节 */
+            position: relative;
+        }
+        /* 这样轮廓就做好了 */
+
+       .mouth{
+            /* 还是老套路，用border属性，边框
+            /* 宽度 */
+            width: 150px;
+            /* 长度 */
+            height: 150px;
+            /* 搞个5px的下半部分边框*/
+            border-bottom: 5px solid rgb(80, 64, 31);
+            /* 圆处理下，要不然成扁嘴了 */
+            border-radius: 50%;
+
+            /* 弄一下位置 */
+            position: absolute;
+            top: 15px;
+            left: 25px
+        }
+
+    
+        /* 这个是左眼的上边框 */
+        /* 做一个框，将多余部分隐藏起来 */
+        .lefteye1{
+            position: absolute;
+            top:-2px;
+            left:15px;
+            /* 框的大小 */
+            width: 55px;
+            height: 65px;
+            overflow: hidden;
+            /* 让它转40度，要不然。。。 */
+            transform: rotate(40deg)
+        }
+        /* 在这个框基础上开始画 */
+        .lefteye1::before{
+            
+            content: '';
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            border: 5px solid rgb(250, 182, 115) ;
+            border-radius: 100px;
+        }
+
+        /* 左眼的第下外框 */
+        .lefteye2{
+            position: absolute;
+            top:17px;
+            left:18px;
+            /* 框的大小 */
+            width: 55px;
+            height: 65px;
+            overflow: hidden;
+            /* 让它转40度，要不然。。。 */
+            transform: rotate(40deg)
+        }
+        /* 在这个框基础上开始画 */
+        .lefteye2::before{
+            
+            content: '';
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            border: 5px solid rgb(250, 182, 115) ;
+            border-radius: 100px;
+        }
+
+
+
+        /* 左眼的第左外框 */
+        .lefteye3{
+            position: absolute;
+            top:37px;
+            left:4px;
+            width: 24px;
+            height: 25px;
+            overflow: hidden;
+            transform: rotate(-110deg)
+        }
+        .lefteye3::before{
+            content: '';
+            width: 15px;
+            height: 500px;
+            position: absolute;
+            border: 5px solid rgb(250, 182, 115) ;
+            border-radius: 100px;
+        }
+
+        /* 左眼的第右外框 */
+        .lefteye4{
+            position: absolute;
+            top:30px;
+            left:60px;
+            width: 24px;
+            height: 25px;
+            overflow: hidden;
+            transform: rotate(100deg)
+        }
+        .lefteye4::before{
+            content: '';
+            width: 15px;
+            height: 500px;
+            position: absolute;
+            border: 5px solid rgb(250, 182, 115) ;
+            border-radius: 100px;
+        }
+
+        /* 头发 */
+        .hair{
+            width: 200px;
+            height: 200px;
+            border-top: 10px solid rgb(0, 0, 0) ;
+            border-radius: 50px;
+        }
+
+
+        /* 左眼 眼白 */
+        .lefteyewhite1{
+            position: absolute;
+            top:2px;
+            left:18px;
+            width: 53px;
+            height: 65px;
+            overflow: hidden;
+            transform: rotate(42deg)
+        }
+        .lefteyewhite1::before{
+            content: '';
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            border: 15px solid rgb(255, 252, 252) ;
+            border-radius: 100px;
+        }
+
+        .lefteyewhite2{
+            position: absolute;
+            top:41px;
+            left:4px;
+            width: 24px;
+            height: 25px;
+            overflow: hidden;
+            transform: rotate(70deg)
+        }
+        .lefteyewhite2::before{
+            content: '';
+            width: 0px;
+            height: 3px;
+            position: absolute;
+            border: 8px solid rgb(255, 255, 255) ;
+            border-radius: 100px;
+        }
+
+        .lefteyewhite3{
+            position: absolute;
+            top:33px;
+            left:53px;
+            width: 24px;
+            height: 25px;
+            overflow: hidden;
+            transform: rotate(100deg)
+        }
+        .lefteyewhite3::before{
+            content: '';
+            width: 0px;
+            height: 3px;
+            position: absolute;
+            border: 8px solid rgb(252, 252, 252) ;
+            border-radius: 100px;
+        }
+
+        /* 眼球 */
+        
+        .lefteyeball{
+            position: absolute;
+            top:42px;
+            left:9px;
+            width: 15px;
+            height: 15px;
+            background-color: rgb(37, 37, 37);
+            border-radius: 50%;
+        }
+
+
+        /* ========================= */
+
+        /* 调节起来也简单，先移动一个 记住 px 然后一个一个改 */
+        /* 没改成功，出车祸了 */
+        /* 慢慢改吧 */
+
+
+        .righteye1{
+            position: absolute;
+            top:-5px;
+            left:125px;
+            width: 55px;
+            height: 65px;
+            overflow: hidden;
+            transform: rotate(45deg)
+        }
+        .righteye1::before{
+            
+            content: '';
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            border: 5px solid rgb(250, 182, 115) ;
+            border-radius: 100px;
+        }
+
+        .righteye2{
+            position: absolute;
+            top:12px;
+            left:138px;
+            width: 55px;
+            height: 65px;
+            overflow: hidden;
+            transform: rotate(45deg)
+        }
+
+        .righteye2::before{
+            
+            content: '';
+            width: 190px;
+            height: 200px;
+            position: absolute;
+            border: 5px solid rgb(250, 182, 115) ;
+            border-radius: 100px;
+        }
+        .righteye3{
+            position: absolute;
+            top:33px;
+            left:112px;
+            width: 24px;
+            height: 25px;
+            overflow: hidden;
+            transform: rotate(-110deg)
+        }
+        .righteye3::before{
+            content: '';
+            width: 15px;
+            height: 500px;
+            position: absolute;
+            border: 5px solid rgb(250, 182, 115) ;
+            border-radius: 100px;
+        }
+
+        .righteye4{
+            position: absolute;
+            top:31px;
+            left:178px;
+            width: 24px;
+            height: 25px;
+            overflow: hidden;
+            transform: rotate(100deg)
+        }
+        .righteye4::before{
+            content: '';
+            width: 10px;
+            height: 500px;
+            position: absolute;
+            border: 5px solid rgb(250, 182, 115) ;
+            border-radius: 100px;
+        }
+
+
+        .righteyewhite1{
+            position: absolute;
+            top:0px;
+            left:130px;
+            width: 53px;
+            height: 65px;
+            overflow: hidden;
+            transform: rotate(44deg)
+        }
+        .righteyewhite1::before{
+            content: '';
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            border: 12px solid rgb(255, 252, 252) ;
+            border-radius: 100px;
+        }
+
+        .righteyewhite2{
+            position: absolute;
+            top:37px;
+            left:113px;
+            width: 24px;
+            height: 25px;
+            overflow: hidden;
+            transform: rotate(70deg)
+        }
+        .righteyewhite2::before{
+            content: '';
+            width: 0px;
+            height: 3px;
+            position: absolute;
+            border: 8px solid rgb(255, 255, 255) ;
+            border-radius: 100px;
+        }
+
+
+        /* 三个小球球代替 */
+        .righteyewhite3-1{
+            position: absolute;
+            top:34px;
+            left:174px;
+            width: 11px;
+            height: 11px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 50%;
+        }
+        .righteyewhite3-2{
+            position: absolute;
+            top:35px;
+            left:178px;
+            width: 11px;
+            height: 11px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 50%;
+        }
+        .righteyewhite3-2{
+            position: absolute;
+            top:35px;
+            left:179px;
+            width: 11px;
+            height: 11px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 50%;
+        }
+        
+        .righteyeball{
+            position: absolute;
+            top:37px;
+            left:119px;
+            width: 15px;
+            height: 15px;
+            background-color: rgb(37, 37, 37);
+            border-radius: 50%;
+        }
+    </style>
+
+</body>
+</html>

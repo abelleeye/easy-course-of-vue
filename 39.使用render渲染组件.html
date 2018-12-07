@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Chapter thirty nine</title>
+</head>
+<body>
+    
+   
+    <div id="app">
+        <!-- 注意看，我们这里什么都没有 -->
+    </div>
+
+    
+    <script>
+
+        // 定义一个组件先
+        const zujian = {
+            template:'<h1>我是组件</h1>'
+        }
+
+        new Vue({
+            el:'#app',
+            data:{
+            },
+            // render是在这里创建的
+            render:function(createElements){ // 我要说明一下这个参数，这个参数的名字当然可以自定义
+                                            // 这个参数的作用是 讲 模版渲染为 html结构
+
+                // reurn 就 okay了， 然后他就会 替换咱们的el。替换哦，不是放在el里面
+                return createElements(zujian)
+
+            // 这个就是通过箭头函数简写render
+            // render: c => c(zujian)
+
+            }
+        })
+
+
+     
+
+     
+        
+    </script>
+
+</body>
+</html>

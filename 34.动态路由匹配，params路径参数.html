@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <title>Chapter thirty four</title>
+</head>
+<body>
+    
+    
+
+   
+    <div id="app">
+        <!-- 注意，我这里改了 参数 999 的方式 -->
+        <router-link to="/hello/999" >Go to Hello</router-link>
+       
+        <router-view></router-view>
+    </div>
+
+    
+    <script>
+       const hello= { template: '<h1>{{ $route.params.openid }}</h1>' }
+       const router = new VueRouter({
+
+           routes:[ 
+                // 我们在这里改造一下这个路径，restful风格
+                {path:'/hello/:openid', component: hello},
+               
+           ],
+       })
+
+
+        new Vue({
+            router,
+            el:'#app',
+            data:{
+            },
+            methods:{
+            }
+        })
+
+
+     
+
+     
+        
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Chapter twenty eight</title>
+    <!-- 这章的重点，重点，重点，我本想放到最后说，但是很重要我就在开头先说了 -->
+    <!-- data中的数据是可读可写的，props中的数据是只读的，无法重新赋值 -->
+    
+</head>
+<body>
+
+    <div id="app">
+        <!-- 正常情况下我们是可以拿到props（也就是这个你好！）的值的，但是data的是拿不到的，
+        因为，data的属性，是属于我们的父组件，这个注释上面的div的 -->
+        
+        <hello title="你好！"></hello>
+        
+        
+
+        <!-- 但是我们可以通过数据绑定的形式 将数据传递到自组件，来看例子 -->
+        <!-- 我之所以放三个u，是因为我想表达，这个名字是可以随意定的 -->
+        <!-- 放完后，我们还要在自组件中，添加这个props属性 -->
+        <!-- 然后我们就可以在模版中使用这个值了 -->
+        <!-- 怎么显示这个数据，当然还是在模版中写了，我写了个大h -->
+        <happy :uuu="meal"></happy>
+
+    </div>
+
+    <template id='drink'>
+        <h1>{{title}}</h1>
+        <!-- 调用 父组件的属性 像下面这个，会报错 Error compiling template -->
+        <!-- <h1>{{meal}}</h1> -->
+    </template>
+
+    <!-- 新的模版，放一起报错，我就拿出来了 -->
+    <!-- Do u like curry, I don't like it, lol! -->
+    <template id='newdrink'>
+            <h1>{{uuu}}</h1>
+    </template>
+
+
+    <!-- 传递过程就是，data ==> :uuu ==> props ==> template  -->
+
+    
+    <script>
+        Vue.component('hello', {
+            props:['title'],
+            template: '#drink'
+        }),
+
+        Vue.component('happy', {
+            // 这里我添加了uuu的属性作为传值的桥
+            props:['uuu'],
+            template: '#newdrink'
+        }),
+
+
+        new Vue({
+            el:'#app',
+            data:{
+               meal:"curry"
+            },
+        })
+
+     
+        
+    </script>
+
+</body>
+</html>

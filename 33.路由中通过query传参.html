@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <title>Chapter thirty three</title>
+</head>
+<body>
+    
+    
+
+   
+    <div id="app">
+        <!-- 我们在这里添加一个 ？openid=999 的参数 -->
+        <!-- 添加的参数就可以在 roter 里面的 query 找到了 -->
+        <router-link to="/hello?openid=999" >Go to Hello</router-link>
+       
+        <router-view></router-view>
+    </div>
+
+    
+    <script>
+        // 在组件里面调用 route 的 query 来拿到 openid
+       const hello= { template: '<h1>{{ $route.query.openid }}</h1>' }
+       const router = new VueRouter({
+
+           routes:[ 
+                {path:'/hello', component: hello},
+               
+           ],
+       })
+
+
+        new Vue({
+            router,
+            el:'#app',
+            data:{
+            },
+            methods:{
+            }
+        })
+
+
+     
+
+     
+        
+    </script>
+
+</body>
+</html>

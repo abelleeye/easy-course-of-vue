@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <title>Chapter eleven</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <!-- 见名知意，看到这个if 那还用猜？ 那就是 判断了，还是和el 差不多。起飞！
+            格式， 看例子 -->
+        <!-- 先data中定义个boolean值 -->
+
+        <input type="button" value="awesome button" @click="mood=!mood">
+
+        <h2>What's your favo food?</h2>
+        <h5 v-if="mood">My favo food is ...... actually IDK.</h5>
+        <h5 v-else>Get out here!</h5>
+
+
+        <!-- 看一个简单的判断就搞定了，根据官方文档，虽然这破官方文档，很不详细，说：
+        if else 只要紧跟着就好了， 不可以在中间添加其它的，我还没有试什么的，
+        以后发现什么问题，估计我也懒得回来改了，祝大家好运，进步神速，哈哈哈。 -->
+        
+
+        
+    </div>
+
+
+    
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data:{
+                mood:true
+            }
+        })
+    </script>
+
+</body>
+</html>
