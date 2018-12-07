@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <title>Chapter five</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <!-- 本章做的是一个跑马灯的小应用 -->
+
+    <div id="app">
+        
+        <h3>普通版本</h3>
+        <!-- 两个控制“大大的h1”的按钮 -->
+        <input type="button" value="hang out guys！！！" @click="hangbetter">
+        <input type="button" value="stop fucking around!" @click="stop">
+        <!-- 我们这里搞一个大大的h1 -->
+        <h1>{{message}}</h1>
+
+        <!-- 这样我们可以通过 data ==> app这个div域 ==> 然后传递到methods里面去，神不神奇？ -->
+        <!-- 但是我感觉蠢爆了，而且我不知道怎么将方法里面的参数传递到data中去，不过问题不大，
+            我们有更好的方法，在methods里面通过“this”关键字可以直接调用data中的属性 -->
+
+
+        <br><br><br>
+
+        <h3>定时器版本</h3>
+        <input type="button" value="hang out guys！！！" @click="hangbettertimer">
+        <input type="button" value="stop fucking around!" @click="stop">
+    </div>
+
+
+    
+    <script>
+        var app = new Vue({
+            el: '#app',
+            //我们这里来一个大大的字符串
+            data:{
+                message:"some girl dress up as a fuckboy",
+                //不知道vue的命名规范，先这么写
+                timer_gobal_variable: null,
+            },
+            // 我们先搞两个事件，然后让h1起飞!
+            methods:{
+                //这个是反例子
+                hang(message){
+                    //截取第一个字符
+                    //这个方法和java里面的一样一样的
+                    var first = message.substring(0,1);
+                    //截取其它所有字符
+                    var others = message.substring(1);
+                    //重新拼接字符
+                    message  = others + first;
+                    // 我试过了没反应 除非加 this.message = message 发现自己贼蠢
+                },
+
+                //这个好
+                hangbetter(){
+                    //截取第一个字符
+                    //这个方法和java里面的一样一样的
+                    var first = this.message.substring(0,1);
+                    //截取其它所有字符
+                    var others = this.message.substring(1);
+                    //重新拼接字符
+                    this.message = others + first;
+                    //点击一下爽不爽，累不累？
+                },
+
+                //定时器版本
+                hangbettertimer(){
+                    if(this.timer_gobal_variable != null){return}
+                    //搞个定时器,第一个参数触发事件，第二个参数每个多久触发一次这个事件
+                    //通过ES6箭头函数，使内部this可以直接指向外部。其实我也第一次学到这个箭头函数。尴尬。
+                    //不过真好用，傻笑！
+                    //如果不用箭头函数，就得在这个注释这个域弄个像 var _this = this 这样的代理变量
+                    this.timer_gobal_variable = setInterval(() => {
+                        var first = this.message.substring(0,1);
+                        var others = this.message.substring(1);
+                        this.message = others + first;
+                    },50)
+
+                },
+
+
+                // 上面执行的方法弄完了，下面我们弄个统一的 stop 方法
+                stop(){
+                    clearInterval(this.timer_gobal_variable);
+                    this.timer_gobal_variable = null;
+                }
+            }
+
+        })
+    </script>
+
+</body>
+</html>

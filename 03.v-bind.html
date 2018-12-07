@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <title>Chapter three</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+
+    <!-- v-bind 是 Vue 中，用于绑定属性的指令 -->
+    <!-- 下面的是例子 -->
+    <div id="app">
+        
+        
+        <!-- 这里我们演示 v-bind -->
+        <!-- 我们先在这里定义一个span -->
+        <span v-bind:title="whouare">
+                用你的鼠标悬停几秒钟就可以看到绑定的“wouare”信息！
+        </span>
+
+        <br>
+        <!-- 都是有效的 -->
+
+        <!-- 这里举一个不用 v-bind 的例子-->
+        <!-- 也是可以绑定成功的，所以这里要注意 -->
+        <span title="whouare">
+                用你的鼠标悬停几秒钟就可以看到绑定的“wouare”信息！
+        </span>
+        
+        <br>
+
+        <!-- 这里举一个 用 v-bind 绑定按钮value的例子 -->
+        <input type="button" v-bind:value="whouare">
+
+        <br>
+
+        <!-- 这里举一个 用 v-bind 绑定按钮title的例子 -->
+        <input type="button" value="按钮" v-bind:title='whouare'>
+
+        <br>
+
+        <!-- 这里我们采用表达式的方式展示 -->
+        <input type="button" v-bind:value="whouare+123213">
+        <!-- 可以看到展示的结果为 I'm superman123213 -->
+
+
+        <br>
+
+        
+        <!-- v-bind还有个简写的表达式就是一个冒号":" -->
+        <input type="button" :value="whouare+123213">
+    </div>
+
+
+    
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data:{
+                // 这里我们再定一个属性
+                whouare: "I'm superman",
+            }
+        })
+    </script>
+
+</body>
+</html>

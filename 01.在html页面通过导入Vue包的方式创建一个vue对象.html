@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="chrome">
+    <title>chapter one</title>
+    <!-- 1.导入Vue的包 -->
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 导入这个CDN Vue包后，在浏览器的内存中，就多了一个Vue构造函数 -->
+    <!-- Vue.js 的核心是一个允许采用简洁的模板语法来声明式地将数据渲染进 DOM 的系统 -->
+</head>
+
+<body>
+
+    <!-- 下面new的Vue实例通过id绑定的功能可以控制这个div块的所有内容 -->
+    <div id="app">
+        {{massage}}  <!-- 因为下面Vue实例里面el的绑定关系，这里可以通过双"{}"形式接受Vue实例里面data定义的值 -->
+    </div>
+
+    <!-- 这个就是MVVM里面的V -->
+
+
+
+
+
+    <script>
+    //2.创建一个vue实例
+    //这里我们将Vue构造函数通过new的方式搞出来
+    //Vue括号内部为 初始化Vue时，传递的参数
+    var app = new Vue({
+        //el:表示，当前我们 new 的这个Vue对象，要控制页面上的哪个元素，
+        //我们现在先在上面创建一个id为“app”的div块,再el后面添加'#app'，
+        //这样就通过id来绑定到了id为“app“的div块
+        el: '#app',
+        //这个data 就是我们MVVM里面的M
+        data:{  //data中存放的是这个 Vue实例 的数据， 可以通过 el 指向 上方div块进行交互
+            massage: '您好，我是李也！' //我再这个地方定义了一个字符串
+        }
+    })
+    </script>
+    <!-- 这里new出来的 app 对象就是 MVVM 中的 VM -->
+
+    <!-- 在这个简单的例子中 data 内的属性为 响应式的，即 你在控制台 更改data属性 div里面文字也会变-->
+</body>
+</html>
